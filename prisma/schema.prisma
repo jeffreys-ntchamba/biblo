@@ -1,10 +1,27 @@
-type User{
-        id:ID! @id
-        nom:String!
-        categorie:String!
-        statut:String!
-        date1:String!
-        date2:String!
-        date3:String!
-        photo:String!
-    }
+    type Etudiant{
+    id: ID! @id
+    name: String
+    matricule: String
+    rapport:[Rapport!]  @relation(name:"EtudiantRapport")
+    specialite: Specialite! @relation(name:"SpecialiteEtudiants")
+  }
+   type Specialite{
+    id: ID! @id
+    name: String
+    departement:Departement! @relation(name:"DepartementSpecialites")
+    etudiant:[Etudiant!] @relation(name:"SpecialiteEtudiants")
+  }
+   type Departement{
+    id: ID! @id
+    name: String @unique
+    rapport:[Rapport!] @relation(name:"RapportDepartement")
+    specialite:[Specialite!] @relation(name:"DepartementSpecialites")
+  }
+   type Rapport{
+    id: ID! @id
+    theme: String
+    pdf: String! 
+    etudiant:Etudiant! @relation(name:"EtudiantRapport")
+    departement:Departement! @relation(name:"RapportDepartement")
+    
+  }

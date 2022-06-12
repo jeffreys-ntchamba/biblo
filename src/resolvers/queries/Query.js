@@ -1,6 +1,7 @@
-const {users,info}=require('./user')
-
+const {listRapport,info}=require('./rapport')
+const {listDepartement}=require('./departement')
 module.exports={
-    users,
-    info
+    listRapport,
+    info,
+    listDepartement
 }

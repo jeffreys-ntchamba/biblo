@@ -4,21 +4,41 @@ const typeDefs=gql`
    scalar Upload 
     type Query{
         info:String!
-        users:[User!]
+        listRapport: [Rapport!]!
+        listDepartement: [Departement!]!
     }
     type Mutation{
-        NewUser( nom:String!, categorie:String!, statut:String!,date1:String!,date2:String!,date3:String!, photo:String!):User!
+        addRapport(theme: String!, pdf:Upload!):Rapport!
+        addDepartement(name: String!) :Departement!
+        
     }
-    type User{
-        id:ID!
-        nom:String!
-        categorie:String!
-        statut:String!
-        date1:String!
-        date2:String!
-        date3:String!
-        photo:String!
-    }
+    type Etudiant{
+    id: ID!
+    name: String
+    matricule: String
+    rapport:[Rapport!]
+    specialite: Specialite!
+  }
+   type Specialite{
+    id: ID!
+    name: String
+    departement:Departement!
+    etudiant:[Etudiant!]
+  }
+   type Departement{
+    id: ID! 
+    name: String
+    rapport:[Rapport!]
+    specialite:[Specialite!]
+  }
+   type Rapport{
+    id: ID! 
+    theme: String
+    pdf: String!
+    etudiant:Etudiant!
+    departement:Departement!
+    
+  }
     `
 module.exports= {
     typeDefs

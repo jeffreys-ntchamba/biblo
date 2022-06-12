@@ -3,7 +3,19 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateDepartement {
+  count: Int!
+}
+
+type AggregateEtudiant {
+  count: Int!
+}
+
+type AggregateRapport {
+  count: Int!
+}
+
+type AggregateSpecialite {
   count: Int!
 }
 
@@ -11,15 +23,456 @@ type BatchPayload {
   count: Long!
 }
 
+type Departement {
+  id: ID!
+  name: String
+  rapport(where: RapportWhereInput, orderBy: RapportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rapport!]
+  specialite(where: SpecialiteWhereInput, orderBy: SpecialiteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialite!]
+}
+
+type DepartementConnection {
+  pageInfo: PageInfo!
+  edges: [DepartementEdge]!
+  aggregate: AggregateDepartement!
+}
+
+input DepartementCreateInput {
+  id: ID
+  name: String
+  rapport: RapportCreateManyWithoutDepartementInput
+  specialite: SpecialiteCreateManyWithoutDepartementInput
+}
+
+input DepartementCreateOneWithoutRapportInput {
+  create: DepartementCreateWithoutRapportInput
+  connect: DepartementWhereUniqueInput
+}
+
+input DepartementCreateOneWithoutSpecialiteInput {
+  create: DepartementCreateWithoutSpecialiteInput
+  connect: DepartementWhereUniqueInput
+}
+
+input DepartementCreateWithoutRapportInput {
+  id: ID
+  name: String
+  specialite: SpecialiteCreateManyWithoutDepartementInput
+}
+
+input DepartementCreateWithoutSpecialiteInput {
+  id: ID
+  name: String
+  rapport: RapportCreateManyWithoutDepartementInput
+}
+
+type DepartementEdge {
+  node: Departement!
+  cursor: String!
+}
+
+enum DepartementOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type DepartementPreviousValues {
+  id: ID!
+  name: String
+}
+
+type DepartementSubscriptionPayload {
+  mutation: MutationType!
+  node: Departement
+  updatedFields: [String!]
+  previousValues: DepartementPreviousValues
+}
+
+input DepartementSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: DepartementWhereInput
+  AND: [DepartementSubscriptionWhereInput!]
+  OR: [DepartementSubscriptionWhereInput!]
+  NOT: [DepartementSubscriptionWhereInput!]
+}
+
+input DepartementUpdateInput {
+  name: String
+  rapport: RapportUpdateManyWithoutDepartementInput
+  specialite: SpecialiteUpdateManyWithoutDepartementInput
+}
+
+input DepartementUpdateManyMutationInput {
+  name: String
+}
+
+input DepartementUpdateOneRequiredWithoutRapportInput {
+  create: DepartementCreateWithoutRapportInput
+  update: DepartementUpdateWithoutRapportDataInput
+  upsert: DepartementUpsertWithoutRapportInput
+  connect: DepartementWhereUniqueInput
+}
+
+input DepartementUpdateOneRequiredWithoutSpecialiteInput {
+  create: DepartementCreateWithoutSpecialiteInput
+  update: DepartementUpdateWithoutSpecialiteDataInput
+  upsert: DepartementUpsertWithoutSpecialiteInput
+  connect: DepartementWhereUniqueInput
+}
+
+input DepartementUpdateWithoutRapportDataInput {
+  name: String
+  specialite: SpecialiteUpdateManyWithoutDepartementInput
+}
+
+input DepartementUpdateWithoutSpecialiteDataInput {
+  name: String
+  rapport: RapportUpdateManyWithoutDepartementInput
+}
+
+input DepartementUpsertWithoutRapportInput {
+  update: DepartementUpdateWithoutRapportDataInput!
+  create: DepartementCreateWithoutRapportInput!
+}
+
+input DepartementUpsertWithoutSpecialiteInput {
+  update: DepartementUpdateWithoutSpecialiteDataInput!
+  create: DepartementCreateWithoutSpecialiteInput!
+}
+
+input DepartementWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  rapport_every: RapportWhereInput
+  rapport_some: RapportWhereInput
+  rapport_none: RapportWhereInput
+  specialite_every: SpecialiteWhereInput
+  specialite_some: SpecialiteWhereInput
+  specialite_none: SpecialiteWhereInput
+  AND: [DepartementWhereInput!]
+  OR: [DepartementWhereInput!]
+  NOT: [DepartementWhereInput!]
+}
+
+input DepartementWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type Etudiant {
+  id: ID!
+  name: String
+  matricule: String
+  rapport(where: RapportWhereInput, orderBy: RapportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rapport!]
+  specialite: Specialite!
+}
+
+type EtudiantConnection {
+  pageInfo: PageInfo!
+  edges: [EtudiantEdge]!
+  aggregate: AggregateEtudiant!
+}
+
+input EtudiantCreateInput {
+  id: ID
+  name: String
+  matricule: String
+  rapport: RapportCreateManyWithoutEtudiantInput
+  specialite: SpecialiteCreateOneWithoutEtudiantInput!
+}
+
+input EtudiantCreateManyWithoutSpecialiteInput {
+  create: [EtudiantCreateWithoutSpecialiteInput!]
+  connect: [EtudiantWhereUniqueInput!]
+}
+
+input EtudiantCreateOneWithoutRapportInput {
+  create: EtudiantCreateWithoutRapportInput
+  connect: EtudiantWhereUniqueInput
+}
+
+input EtudiantCreateWithoutRapportInput {
+  id: ID
+  name: String
+  matricule: String
+  specialite: SpecialiteCreateOneWithoutEtudiantInput!
+}
+
+input EtudiantCreateWithoutSpecialiteInput {
+  id: ID
+  name: String
+  matricule: String
+  rapport: RapportCreateManyWithoutEtudiantInput
+}
+
+type EtudiantEdge {
+  node: Etudiant!
+  cursor: String!
+}
+
+enum EtudiantOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  matricule_ASC
+  matricule_DESC
+}
+
+type EtudiantPreviousValues {
+  id: ID!
+  name: String
+  matricule: String
+}
+
+input EtudiantScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  matricule: String
+  matricule_not: String
+  matricule_in: [String!]
+  matricule_not_in: [String!]
+  matricule_lt: String
+  matricule_lte: String
+  matricule_gt: String
+  matricule_gte: String
+  matricule_contains: String
+  matricule_not_contains: String
+  matricule_starts_with: String
+  matricule_not_starts_with: String
+  matricule_ends_with: String
+  matricule_not_ends_with: String
+  AND: [EtudiantScalarWhereInput!]
+  OR: [EtudiantScalarWhereInput!]
+  NOT: [EtudiantScalarWhereInput!]
+}
+
+type EtudiantSubscriptionPayload {
+  mutation: MutationType!
+  node: Etudiant
+  updatedFields: [String!]
+  previousValues: EtudiantPreviousValues
+}
+
+input EtudiantSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: EtudiantWhereInput
+  AND: [EtudiantSubscriptionWhereInput!]
+  OR: [EtudiantSubscriptionWhereInput!]
+  NOT: [EtudiantSubscriptionWhereInput!]
+}
+
+input EtudiantUpdateInput {
+  name: String
+  matricule: String
+  rapport: RapportUpdateManyWithoutEtudiantInput
+  specialite: SpecialiteUpdateOneRequiredWithoutEtudiantInput
+}
+
+input EtudiantUpdateManyDataInput {
+  name: String
+  matricule: String
+}
+
+input EtudiantUpdateManyMutationInput {
+  name: String
+  matricule: String
+}
+
+input EtudiantUpdateManyWithoutSpecialiteInput {
+  create: [EtudiantCreateWithoutSpecialiteInput!]
+  delete: [EtudiantWhereUniqueInput!]
+  connect: [EtudiantWhereUniqueInput!]
+  set: [EtudiantWhereUniqueInput!]
+  disconnect: [EtudiantWhereUniqueInput!]
+  update: [EtudiantUpdateWithWhereUniqueWithoutSpecialiteInput!]
+  upsert: [EtudiantUpsertWithWhereUniqueWithoutSpecialiteInput!]
+  deleteMany: [EtudiantScalarWhereInput!]
+  updateMany: [EtudiantUpdateManyWithWhereNestedInput!]
+}
+
+input EtudiantUpdateManyWithWhereNestedInput {
+  where: EtudiantScalarWhereInput!
+  data: EtudiantUpdateManyDataInput!
+}
+
+input EtudiantUpdateOneRequiredWithoutRapportInput {
+  create: EtudiantCreateWithoutRapportInput
+  update: EtudiantUpdateWithoutRapportDataInput
+  upsert: EtudiantUpsertWithoutRapportInput
+  connect: EtudiantWhereUniqueInput
+}
+
+input EtudiantUpdateWithoutRapportDataInput {
+  name: String
+  matricule: String
+  specialite: SpecialiteUpdateOneRequiredWithoutEtudiantInput
+}
+
+input EtudiantUpdateWithoutSpecialiteDataInput {
+  name: String
+  matricule: String
+  rapport: RapportUpdateManyWithoutEtudiantInput
+}
+
+input EtudiantUpdateWithWhereUniqueWithoutSpecialiteInput {
+  where: EtudiantWhereUniqueInput!
+  data: EtudiantUpdateWithoutSpecialiteDataInput!
+}
+
+input EtudiantUpsertWithoutRapportInput {
+  update: EtudiantUpdateWithoutRapportDataInput!
+  create: EtudiantCreateWithoutRapportInput!
+}
+
+input EtudiantUpsertWithWhereUniqueWithoutSpecialiteInput {
+  where: EtudiantWhereUniqueInput!
+  update: EtudiantUpdateWithoutSpecialiteDataInput!
+  create: EtudiantCreateWithoutSpecialiteInput!
+}
+
+input EtudiantWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  matricule: String
+  matricule_not: String
+  matricule_in: [String!]
+  matricule_not_in: [String!]
+  matricule_lt: String
+  matricule_lte: String
+  matricule_gt: String
+  matricule_gte: String
+  matricule_contains: String
+  matricule_not_contains: String
+  matricule_starts_with: String
+  matricule_not_starts_with: String
+  matricule_ends_with: String
+  matricule_not_ends_with: String
+  rapport_every: RapportWhereInput
+  rapport_some: RapportWhereInput
+  rapport_none: RapportWhereInput
+  specialite: SpecialiteWhereInput
+  AND: [EtudiantWhereInput!]
+  OR: [EtudiantWhereInput!]
+  NOT: [EtudiantWhereInput!]
+}
+
+input EtudiantWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  createDepartement(data: DepartementCreateInput!): Departement!
+  updateDepartement(data: DepartementUpdateInput!, where: DepartementWhereUniqueInput!): Departement
+  updateManyDepartements(data: DepartementUpdateManyMutationInput!, where: DepartementWhereInput): BatchPayload!
+  upsertDepartement(where: DepartementWhereUniqueInput!, create: DepartementCreateInput!, update: DepartementUpdateInput!): Departement!
+  deleteDepartement(where: DepartementWhereUniqueInput!): Departement
+  deleteManyDepartements(where: DepartementWhereInput): BatchPayload!
+  createEtudiant(data: EtudiantCreateInput!): Etudiant!
+  updateEtudiant(data: EtudiantUpdateInput!, where: EtudiantWhereUniqueInput!): Etudiant
+  updateManyEtudiants(data: EtudiantUpdateManyMutationInput!, where: EtudiantWhereInput): BatchPayload!
+  upsertEtudiant(where: EtudiantWhereUniqueInput!, create: EtudiantCreateInput!, update: EtudiantUpdateInput!): Etudiant!
+  deleteEtudiant(where: EtudiantWhereUniqueInput!): Etudiant
+  deleteManyEtudiants(where: EtudiantWhereInput): BatchPayload!
+  createRapport(data: RapportCreateInput!): Rapport!
+  updateRapport(data: RapportUpdateInput!, where: RapportWhereUniqueInput!): Rapport
+  updateManyRapports(data: RapportUpdateManyMutationInput!, where: RapportWhereInput): BatchPayload!
+  upsertRapport(where: RapportWhereUniqueInput!, create: RapportCreateInput!, update: RapportUpdateInput!): Rapport!
+  deleteRapport(where: RapportWhereUniqueInput!): Rapport
+  deleteManyRapports(where: RapportWhereInput): BatchPayload!
+  createSpecialite(data: SpecialiteCreateInput!): Specialite!
+  updateSpecialite(data: SpecialiteUpdateInput!, where: SpecialiteWhereUniqueInput!): Specialite
+  updateManySpecialites(data: SpecialiteUpdateManyMutationInput!, where: SpecialiteWhereInput): BatchPayload!
+  upsertSpecialite(where: SpecialiteWhereUniqueInput!, create: SpecialiteCreateInput!, update: SpecialiteUpdateInput!): Specialite!
+  deleteSpecialite(where: SpecialiteWhereUniqueInput!): Specialite
+  deleteManySpecialites(where: SpecialiteWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -40,118 +493,88 @@ type PageInfo {
 }
 
 type Query {
-  user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  departement(where: DepartementWhereUniqueInput!): Departement
+  departements(where: DepartementWhereInput, orderBy: DepartementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Departement]!
+  departementsConnection(where: DepartementWhereInput, orderBy: DepartementOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DepartementConnection!
+  etudiant(where: EtudiantWhereUniqueInput!): Etudiant
+  etudiants(where: EtudiantWhereInput, orderBy: EtudiantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Etudiant]!
+  etudiantsConnection(where: EtudiantWhereInput, orderBy: EtudiantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EtudiantConnection!
+  rapport(where: RapportWhereUniqueInput!): Rapport
+  rapports(where: RapportWhereInput, orderBy: RapportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Rapport]!
+  rapportsConnection(where: RapportWhereInput, orderBy: RapportOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RapportConnection!
+  specialite(where: SpecialiteWhereUniqueInput!): Specialite
+  specialites(where: SpecialiteWhereInput, orderBy: SpecialiteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Specialite]!
+  specialitesConnection(where: SpecialiteWhereInput, orderBy: SpecialiteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SpecialiteConnection!
   node(id: ID!): Node
 }
 
-type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-}
-
-type User {
+type Rapport {
   id: ID!
-  nom: String!
-  categorie: String!
-  statut: String!
-  date1: String!
-  date2: String!
-  date3: String!
-  photo: String!
+  theme: String
+  pdf: String!
+  etudiant: Etudiant!
+  departement: Departement!
 }
 
-type UserConnection {
+type RapportConnection {
   pageInfo: PageInfo!
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
+  edges: [RapportEdge]!
+  aggregate: AggregateRapport!
 }
 
-input UserCreateInput {
+input RapportCreateInput {
   id: ID
-  nom: String!
-  categorie: String!
-  statut: String!
-  date1: String!
-  date2: String!
-  date3: String!
-  photo: String!
+  theme: String
+  pdf: String!
+  etudiant: EtudiantCreateOneWithoutRapportInput!
+  departement: DepartementCreateOneWithoutRapportInput!
 }
 
-type UserEdge {
-  node: User!
+input RapportCreateManyWithoutDepartementInput {
+  create: [RapportCreateWithoutDepartementInput!]
+  connect: [RapportWhereUniqueInput!]
+}
+
+input RapportCreateManyWithoutEtudiantInput {
+  create: [RapportCreateWithoutEtudiantInput!]
+  connect: [RapportWhereUniqueInput!]
+}
+
+input RapportCreateWithoutDepartementInput {
+  id: ID
+  theme: String
+  pdf: String!
+  etudiant: EtudiantCreateOneWithoutRapportInput!
+}
+
+input RapportCreateWithoutEtudiantInput {
+  id: ID
+  theme: String
+  pdf: String!
+  departement: DepartementCreateOneWithoutRapportInput!
+}
+
+type RapportEdge {
+  node: Rapport!
   cursor: String!
 }
 
-enum UserOrderByInput {
+enum RapportOrderByInput {
   id_ASC
   id_DESC
-  nom_ASC
-  nom_DESC
-  categorie_ASC
-  categorie_DESC
-  statut_ASC
-  statut_DESC
-  date1_ASC
-  date1_DESC
-  date2_ASC
-  date2_DESC
-  date3_ASC
-  date3_DESC
-  photo_ASC
-  photo_DESC
+  theme_ASC
+  theme_DESC
+  pdf_ASC
+  pdf_DESC
 }
 
-type UserPreviousValues {
+type RapportPreviousValues {
   id: ID!
-  nom: String!
-  categorie: String!
-  statut: String!
-  date1: String!
-  date2: String!
-  date3: String!
-  photo: String!
+  theme: String
+  pdf: String!
 }
 
-type UserSubscriptionPayload {
-  mutation: MutationType!
-  node: User
-  updatedFields: [String!]
-  previousValues: UserPreviousValues
-}
-
-input UserSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: UserWhereInput
-  AND: [UserSubscriptionWhereInput!]
-  OR: [UserSubscriptionWhereInput!]
-  NOT: [UserSubscriptionWhereInput!]
-}
-
-input UserUpdateInput {
-  nom: String
-  categorie: String
-  statut: String
-  date1: String
-  date2: String
-  date3: String
-  photo: String
-}
-
-input UserUpdateManyMutationInput {
-  nom: String
-  categorie: String
-  statut: String
-  date1: String
-  date2: String
-  date3: String
-  photo: String
-}
-
-input UserWhereInput {
+input RapportScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -166,111 +589,413 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  nom: String
-  nom_not: String
-  nom_in: [String!]
-  nom_not_in: [String!]
-  nom_lt: String
-  nom_lte: String
-  nom_gt: String
-  nom_gte: String
-  nom_contains: String
-  nom_not_contains: String
-  nom_starts_with: String
-  nom_not_starts_with: String
-  nom_ends_with: String
-  nom_not_ends_with: String
-  categorie: String
-  categorie_not: String
-  categorie_in: [String!]
-  categorie_not_in: [String!]
-  categorie_lt: String
-  categorie_lte: String
-  categorie_gt: String
-  categorie_gte: String
-  categorie_contains: String
-  categorie_not_contains: String
-  categorie_starts_with: String
-  categorie_not_starts_with: String
-  categorie_ends_with: String
-  categorie_not_ends_with: String
-  statut: String
-  statut_not: String
-  statut_in: [String!]
-  statut_not_in: [String!]
-  statut_lt: String
-  statut_lte: String
-  statut_gt: String
-  statut_gte: String
-  statut_contains: String
-  statut_not_contains: String
-  statut_starts_with: String
-  statut_not_starts_with: String
-  statut_ends_with: String
-  statut_not_ends_with: String
-  date1: String
-  date1_not: String
-  date1_in: [String!]
-  date1_not_in: [String!]
-  date1_lt: String
-  date1_lte: String
-  date1_gt: String
-  date1_gte: String
-  date1_contains: String
-  date1_not_contains: String
-  date1_starts_with: String
-  date1_not_starts_with: String
-  date1_ends_with: String
-  date1_not_ends_with: String
-  date2: String
-  date2_not: String
-  date2_in: [String!]
-  date2_not_in: [String!]
-  date2_lt: String
-  date2_lte: String
-  date2_gt: String
-  date2_gte: String
-  date2_contains: String
-  date2_not_contains: String
-  date2_starts_with: String
-  date2_not_starts_with: String
-  date2_ends_with: String
-  date2_not_ends_with: String
-  date3: String
-  date3_not: String
-  date3_in: [String!]
-  date3_not_in: [String!]
-  date3_lt: String
-  date3_lte: String
-  date3_gt: String
-  date3_gte: String
-  date3_contains: String
-  date3_not_contains: String
-  date3_starts_with: String
-  date3_not_starts_with: String
-  date3_ends_with: String
-  date3_not_ends_with: String
-  photo: String
-  photo_not: String
-  photo_in: [String!]
-  photo_not_in: [String!]
-  photo_lt: String
-  photo_lte: String
-  photo_gt: String
-  photo_gte: String
-  photo_contains: String
-  photo_not_contains: String
-  photo_starts_with: String
-  photo_not_starts_with: String
-  photo_ends_with: String
-  photo_not_ends_with: String
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
+  theme: String
+  theme_not: String
+  theme_in: [String!]
+  theme_not_in: [String!]
+  theme_lt: String
+  theme_lte: String
+  theme_gt: String
+  theme_gte: String
+  theme_contains: String
+  theme_not_contains: String
+  theme_starts_with: String
+  theme_not_starts_with: String
+  theme_ends_with: String
+  theme_not_ends_with: String
+  pdf: String
+  pdf_not: String
+  pdf_in: [String!]
+  pdf_not_in: [String!]
+  pdf_lt: String
+  pdf_lte: String
+  pdf_gt: String
+  pdf_gte: String
+  pdf_contains: String
+  pdf_not_contains: String
+  pdf_starts_with: String
+  pdf_not_starts_with: String
+  pdf_ends_with: String
+  pdf_not_ends_with: String
+  AND: [RapportScalarWhereInput!]
+  OR: [RapportScalarWhereInput!]
+  NOT: [RapportScalarWhereInput!]
 }
 
-input UserWhereUniqueInput {
+type RapportSubscriptionPayload {
+  mutation: MutationType!
+  node: Rapport
+  updatedFields: [String!]
+  previousValues: RapportPreviousValues
+}
+
+input RapportSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RapportWhereInput
+  AND: [RapportSubscriptionWhereInput!]
+  OR: [RapportSubscriptionWhereInput!]
+  NOT: [RapportSubscriptionWhereInput!]
+}
+
+input RapportUpdateInput {
+  theme: String
+  pdf: String
+  etudiant: EtudiantUpdateOneRequiredWithoutRapportInput
+  departement: DepartementUpdateOneRequiredWithoutRapportInput
+}
+
+input RapportUpdateManyDataInput {
+  theme: String
+  pdf: String
+}
+
+input RapportUpdateManyMutationInput {
+  theme: String
+  pdf: String
+}
+
+input RapportUpdateManyWithoutDepartementInput {
+  create: [RapportCreateWithoutDepartementInput!]
+  delete: [RapportWhereUniqueInput!]
+  connect: [RapportWhereUniqueInput!]
+  set: [RapportWhereUniqueInput!]
+  disconnect: [RapportWhereUniqueInput!]
+  update: [RapportUpdateWithWhereUniqueWithoutDepartementInput!]
+  upsert: [RapportUpsertWithWhereUniqueWithoutDepartementInput!]
+  deleteMany: [RapportScalarWhereInput!]
+  updateMany: [RapportUpdateManyWithWhereNestedInput!]
+}
+
+input RapportUpdateManyWithoutEtudiantInput {
+  create: [RapportCreateWithoutEtudiantInput!]
+  delete: [RapportWhereUniqueInput!]
+  connect: [RapportWhereUniqueInput!]
+  set: [RapportWhereUniqueInput!]
+  disconnect: [RapportWhereUniqueInput!]
+  update: [RapportUpdateWithWhereUniqueWithoutEtudiantInput!]
+  upsert: [RapportUpsertWithWhereUniqueWithoutEtudiantInput!]
+  deleteMany: [RapportScalarWhereInput!]
+  updateMany: [RapportUpdateManyWithWhereNestedInput!]
+}
+
+input RapportUpdateManyWithWhereNestedInput {
+  where: RapportScalarWhereInput!
+  data: RapportUpdateManyDataInput!
+}
+
+input RapportUpdateWithoutDepartementDataInput {
+  theme: String
+  pdf: String
+  etudiant: EtudiantUpdateOneRequiredWithoutRapportInput
+}
+
+input RapportUpdateWithoutEtudiantDataInput {
+  theme: String
+  pdf: String
+  departement: DepartementUpdateOneRequiredWithoutRapportInput
+}
+
+input RapportUpdateWithWhereUniqueWithoutDepartementInput {
+  where: RapportWhereUniqueInput!
+  data: RapportUpdateWithoutDepartementDataInput!
+}
+
+input RapportUpdateWithWhereUniqueWithoutEtudiantInput {
+  where: RapportWhereUniqueInput!
+  data: RapportUpdateWithoutEtudiantDataInput!
+}
+
+input RapportUpsertWithWhereUniqueWithoutDepartementInput {
+  where: RapportWhereUniqueInput!
+  update: RapportUpdateWithoutDepartementDataInput!
+  create: RapportCreateWithoutDepartementInput!
+}
+
+input RapportUpsertWithWhereUniqueWithoutEtudiantInput {
+  where: RapportWhereUniqueInput!
+  update: RapportUpdateWithoutEtudiantDataInput!
+  create: RapportCreateWithoutEtudiantInput!
+}
+
+input RapportWhereInput {
   id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  theme: String
+  theme_not: String
+  theme_in: [String!]
+  theme_not_in: [String!]
+  theme_lt: String
+  theme_lte: String
+  theme_gt: String
+  theme_gte: String
+  theme_contains: String
+  theme_not_contains: String
+  theme_starts_with: String
+  theme_not_starts_with: String
+  theme_ends_with: String
+  theme_not_ends_with: String
+  pdf: String
+  pdf_not: String
+  pdf_in: [String!]
+  pdf_not_in: [String!]
+  pdf_lt: String
+  pdf_lte: String
+  pdf_gt: String
+  pdf_gte: String
+  pdf_contains: String
+  pdf_not_contains: String
+  pdf_starts_with: String
+  pdf_not_starts_with: String
+  pdf_ends_with: String
+  pdf_not_ends_with: String
+  etudiant: EtudiantWhereInput
+  departement: DepartementWhereInput
+  AND: [RapportWhereInput!]
+  OR: [RapportWhereInput!]
+  NOT: [RapportWhereInput!]
+}
+
+input RapportWhereUniqueInput {
+  id: ID
+}
+
+type Specialite {
+  id: ID!
+  name: String
+  departement: Departement!
+  etudiant(where: EtudiantWhereInput, orderBy: EtudiantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Etudiant!]
+}
+
+type SpecialiteConnection {
+  pageInfo: PageInfo!
+  edges: [SpecialiteEdge]!
+  aggregate: AggregateSpecialite!
+}
+
+input SpecialiteCreateInput {
+  id: ID
+  name: String
+  departement: DepartementCreateOneWithoutSpecialiteInput!
+  etudiant: EtudiantCreateManyWithoutSpecialiteInput
+}
+
+input SpecialiteCreateManyWithoutDepartementInput {
+  create: [SpecialiteCreateWithoutDepartementInput!]
+  connect: [SpecialiteWhereUniqueInput!]
+}
+
+input SpecialiteCreateOneWithoutEtudiantInput {
+  create: SpecialiteCreateWithoutEtudiantInput
+  connect: SpecialiteWhereUniqueInput
+}
+
+input SpecialiteCreateWithoutDepartementInput {
+  id: ID
+  name: String
+  etudiant: EtudiantCreateManyWithoutSpecialiteInput
+}
+
+input SpecialiteCreateWithoutEtudiantInput {
+  id: ID
+  name: String
+  departement: DepartementCreateOneWithoutSpecialiteInput!
+}
+
+type SpecialiteEdge {
+  node: Specialite!
+  cursor: String!
+}
+
+enum SpecialiteOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type SpecialitePreviousValues {
+  id: ID!
+  name: String
+}
+
+input SpecialiteScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [SpecialiteScalarWhereInput!]
+  OR: [SpecialiteScalarWhereInput!]
+  NOT: [SpecialiteScalarWhereInput!]
+}
+
+type SpecialiteSubscriptionPayload {
+  mutation: MutationType!
+  node: Specialite
+  updatedFields: [String!]
+  previousValues: SpecialitePreviousValues
+}
+
+input SpecialiteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SpecialiteWhereInput
+  AND: [SpecialiteSubscriptionWhereInput!]
+  OR: [SpecialiteSubscriptionWhereInput!]
+  NOT: [SpecialiteSubscriptionWhereInput!]
+}
+
+input SpecialiteUpdateInput {
+  name: String
+  departement: DepartementUpdateOneRequiredWithoutSpecialiteInput
+  etudiant: EtudiantUpdateManyWithoutSpecialiteInput
+}
+
+input SpecialiteUpdateManyDataInput {
+  name: String
+}
+
+input SpecialiteUpdateManyMutationInput {
+  name: String
+}
+
+input SpecialiteUpdateManyWithoutDepartementInput {
+  create: [SpecialiteCreateWithoutDepartementInput!]
+  delete: [SpecialiteWhereUniqueInput!]
+  connect: [SpecialiteWhereUniqueInput!]
+  set: [SpecialiteWhereUniqueInput!]
+  disconnect: [SpecialiteWhereUniqueInput!]
+  update: [SpecialiteUpdateWithWhereUniqueWithoutDepartementInput!]
+  upsert: [SpecialiteUpsertWithWhereUniqueWithoutDepartementInput!]
+  deleteMany: [SpecialiteScalarWhereInput!]
+  updateMany: [SpecialiteUpdateManyWithWhereNestedInput!]
+}
+
+input SpecialiteUpdateManyWithWhereNestedInput {
+  where: SpecialiteScalarWhereInput!
+  data: SpecialiteUpdateManyDataInput!
+}
+
+input SpecialiteUpdateOneRequiredWithoutEtudiantInput {
+  create: SpecialiteCreateWithoutEtudiantInput
+  update: SpecialiteUpdateWithoutEtudiantDataInput
+  upsert: SpecialiteUpsertWithoutEtudiantInput
+  connect: SpecialiteWhereUniqueInput
+}
+
+input SpecialiteUpdateWithoutDepartementDataInput {
+  name: String
+  etudiant: EtudiantUpdateManyWithoutSpecialiteInput
+}
+
+input SpecialiteUpdateWithoutEtudiantDataInput {
+  name: String
+  departement: DepartementUpdateOneRequiredWithoutSpecialiteInput
+}
+
+input SpecialiteUpdateWithWhereUniqueWithoutDepartementInput {
+  where: SpecialiteWhereUniqueInput!
+  data: SpecialiteUpdateWithoutDepartementDataInput!
+}
+
+input SpecialiteUpsertWithoutEtudiantInput {
+  update: SpecialiteUpdateWithoutEtudiantDataInput!
+  create: SpecialiteCreateWithoutEtudiantInput!
+}
+
+input SpecialiteUpsertWithWhereUniqueWithoutDepartementInput {
+  where: SpecialiteWhereUniqueInput!
+  update: SpecialiteUpdateWithoutDepartementDataInput!
+  create: SpecialiteCreateWithoutDepartementInput!
+}
+
+input SpecialiteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  departement: DepartementWhereInput
+  etudiant_every: EtudiantWhereInput
+  etudiant_some: EtudiantWhereInput
+  etudiant_none: EtudiantWhereInput
+  AND: [SpecialiteWhereInput!]
+  OR: [SpecialiteWhereInput!]
+  NOT: [SpecialiteWhereInput!]
+}
+
+input SpecialiteWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  departement(where: DepartementSubscriptionWhereInput): DepartementSubscriptionPayload
+  etudiant(where: EtudiantSubscriptionWhereInput): EtudiantSubscriptionPayload
+  rapport(where: RapportSubscriptionWhereInput): RapportSubscriptionPayload
+  specialite(where: SpecialiteSubscriptionWhereInput): SpecialiteSubscriptionPayload
 }
 `
       }
